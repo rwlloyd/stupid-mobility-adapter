@@ -53,13 +53,7 @@ and that's just the hardware. Because we're using an esp32, we have the option f
 
 ## Version 3.1 ideas
 
-before I've even really finished the v3 hardware design, I've found things that I think it would be remiss of me to plan for. With 20/20 hindsight, these should have been included from the beginning.
-
-### ESP acts as a radio control reciiever Servo Input to Flight Controllers
-
-### Ros Input control
-
-Here we are at a point where I need external input. HOw do people want to control all of this?
+before I've even really finished the v3 hardware design, I've found things that I think it would be remiss of me to plan for. With 20/20 hindsight, some of these should have been included from the beginning.
 
 ### Servo PWM control From flight controllers
 
@@ -75,3 +69,11 @@ https://www.benripley.com/diy/arduino/three-ways-to-read-a-pwm-signal-with-ardui
 https://lastminuteengineers.com/handling-esp32-gpio-interrupts-tutorial/
 
 This would currently be controlled by the ps3 controller inputs, allowing the user to select different control methods while keeping the ablilty to contol the platform in case of emergencies or testing. 
+
+### ESP acts as a radio control reciever 
+
+### Servo Input to Flight Controllers
+
+### Ros Input control
+
+Here we are at a point where I need external input. HOw do people want to control all of this?
