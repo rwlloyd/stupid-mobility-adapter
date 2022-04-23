@@ -5,6 +5,7 @@
 extern bool debugActuator;
 extern bool debugCurtis;
 extern bool debugActuator;
+extern bool debugServoInputs;
 
 void setupPs3();
 void checkPs3();

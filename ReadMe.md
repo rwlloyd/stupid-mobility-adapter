@@ -12,6 +12,8 @@ In addition to having a microcontroller to tell the motors, actuators etc. what 
 
 The addition of a companion computer adds a great deal of connectivity and processing power. Unfortunately, it also increases the complexity of the setup, and points of failure. Considering that basic control of the platform is a safety critical system, it is desirable to simplify the design. Additionally, as the prototypes of this project have performed on a variety of hardware, it is desirable to make this hardware intentionally generic, while keeping in mind its intended purpose.
 
+---
+
 ### stupid mobility adapter v2 
 
 The culmination of the work on the ScooterBot and ARWAC v4 platforms. This board is intentionally generic. 
@@ -30,6 +32,8 @@ Optional:
 - 2 x Electric Linear Actuator
 - Mobility Scooter with Curtis style I/O
 
+---
+
 ### stupid mobility adapter v3
 
 As above, but ported to ESP32 with the addition of a Sony Dualshock3 Games contoller. Probably add some more bells and whistles too. 
@@ -46,3 +50,28 @@ and that's just the hardware. Because we're using an esp32, we have the option f
 - Wifi
 - A web interface/feedback
 - ROS support (using micro-ROS)
+
+## Version 3.1 ideas
+
+before I've even really finished the v3 hardware design, I've found things that I think it would be remiss of me to plan for. With 20/20 hindsight, these should have been included from the beginning.
+
+### ESP acts as a radio control reciiever Servo Input to Flight Controllers
+
+### Ros Input control
+
+Here we are at a point where I need external input. HOw do people want to control all of this?
+
+### Servo PWM control From flight controllers
+
+Control of the vehicle by more common means should be included. The first one that jumps to mind is the PWM contol that usually output by model radio recievers,
+such as the ardupilot variety - that this hardware is eventually intendended to coexist alongside.
+
+To implement this, we would need to 
+
+- hand over control to the ardupilot system, taking commands from the autopilot in the form of throttle and steering inputs. 
+
+- converting Servo signals to suitable outputs for the curtis unit / pwm driver / servo / hoverboardwheel / odrive combo that you need. 
+https://www.benripley.com/diy/arduino/three-ways-to-read-a-pwm-signal-with-arduino/
+https://lastminuteengineers.com/handling-esp32-gpio-interrupts-tutorial/
+
+This would currently be controlled by the ps3 controller inputs, allowing the user to select different control methods while keeping the ablilty to contol the platform in case of emergencies or testing. 

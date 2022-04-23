@@ -1,4 +1,5 @@
 #include <Ps3Controller.h>
+
 #include "safety.h"
 #include "config.h"
 //#include "dc_motor.h"
@@ -9,6 +10,7 @@ bool debugController = false;
 bool debugSetpoints = false;
 bool debugCurtis = false;
 bool debugActuator = false;
+bool debugServoInput = false;
 bool commandWaiting = false;
 
 String esp_address; //variable to save the esp bluetooth address useful for debugging.
