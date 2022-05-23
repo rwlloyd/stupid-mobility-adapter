@@ -12,7 +12,7 @@
 // variables that lots of things want to access anyway
 extern int motorSpeed;
 extern int actuatorSetpoint_request;
-
+extern int toolSetpoint_request;
 
 #define errorPin 36
 #define BATT_DIV_PIN 35 // 15 can't be used while BT and Wifi are enabled... https://docs.espressif.com/projects/esp-idf/en/release-v4.0/api-reference/peripherals/adc.html
@@ -77,13 +77,14 @@ extern int actuatorSetpoint_request;
 #define CURTIS_DEADBAND 5
 #endif
 
+// Below here are settings common to all modes
 
-// For the moment the actuator is always the same
+// Steering Actuator
 // For actuator, extend is....
-#define ACT_EN 27
-#define ACT_R_PWM 14
-#define ACT_L_PWM 12
-#define ACT_FB 34 // ACT1_FB
+#define ACT_EN 27       // BTS1_EN
+#define ACT_R_PWM 14    // BTS1_RPWM
+#define ACT_L_PWM 12    // BTS1_LPWM
+#define ACT_FB 34       // ACT1_FB
 
 #define ACT_P 2
 #define ACT_I 0.1
@@ -91,6 +92,26 @@ extern int actuatorSetpoint_request;
 
 #define actCentre 889              // 263 on 0-1024 scale
 #define actDeadband 5              //Stops the actuator hunting quite so much
+
+// Tool Actuator
+// For actuator, extend is....
+// voltages:positions are steering(vin:4.75v, centre:2.48v, right:1.34v, left:3.5v)
+//                            tool(vin:4.75v, max:1.9v, min 0.4v)
+
+#define TOOL_EN 32      // BTS0_EN
+#define TOOL_R_PWM 33   // BTS0_RPWM
+#define TOOL_L_PWM 25   // BTS0_LPWM
+#define TOOL_FB 39      // ACT0_FB
+
+#define TOOL_P 2
+#define TOOL_I 0.1
+#define TOOL_D 0
+
+#define toolMin 10
+#define toolMax 40
+#define toolCentre floor(abs(toolMax - toolMin)/2); //  0-1024 scale
+#define toolDeadband 5              //Stops the actuator hunting quite so much
+#define toolStep 10
 
 // Communication 
 #define MESSAGELENGTH 4

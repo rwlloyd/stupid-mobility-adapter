@@ -32,7 +32,7 @@ void loop() {
   //checkConnection(); // comms.cpp - Only needed when relying on the serial connection for safety critical control
   //checkSerialComs(); // comms.cpp - Needed if recieving serial data for control. So, not yet.
   if (error) {
-    stopActuator();
+    stopActuators();
     doCurtisControl();
     //stopMotor(); // for use with pwm motor driver.
   }

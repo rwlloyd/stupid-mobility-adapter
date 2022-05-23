@@ -96,6 +96,14 @@ void getStates() {
     } else {
       actuatorSetpoint_request = 0;
     }
+
+    if (abs(left_trigger_2) > 200){
+      toolSetpoint_request = toolMin;
+    }
+    if (abs(right_trigger_2) > 200){
+      toolSetpoint_request = toolMax;
+    }
+
   }
 
   if (debugController) {
