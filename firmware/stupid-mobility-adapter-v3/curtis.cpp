@@ -1,11 +1,12 @@
 #include <MCP4725.h>                  // https://github.com/RobTillaart/MCP4725
 #include <Wire.h>                     // include the Wire Library - needed to communicate with the DAC
-#include "safety.h"
 #include "config.h"
+#include "safety.h"
 #include "ps3.h"
 
 // All speed and direction derived from the global motorSpeed variable from the PS3
 uint32_t demand = 0; //Variable for the demanded speed (0-4095).
+int motorSpeed;
 
 MCP4725 MCP(MCP4725_I2C_ADDR);
 

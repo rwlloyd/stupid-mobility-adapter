@@ -1,8 +1,6 @@
 #include <Arduino.h>  // So we can use serialEvent().
 #include "config.h"
 #include "safety.h"
-//#include "actuator.h"
-//#include "dc_motor.h"
 
 // Setup serial communication bytes
 // length of data packet. Just the number of bytes for now

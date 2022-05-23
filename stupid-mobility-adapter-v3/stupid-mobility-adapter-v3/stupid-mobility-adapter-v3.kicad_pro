@@ -355,7 +355,9 @@
     "pinned_footprint_libs": [
       "stuipid-electronics-components"
     ],
-    "pinned_symbol_libs": []
+    "pinned_symbol_libs": [
+      "stupid-electronics-components-library"
+    ]
   },
   "meta": {
     "filename": "stupid-mobility-adapter-v3.kicad_pro",

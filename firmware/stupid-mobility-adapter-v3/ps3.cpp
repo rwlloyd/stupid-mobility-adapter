@@ -3,8 +3,10 @@
 #include "safety.h"
 #include "config.h"
 //#include "dc_motor.h"
+#include "rcinput.h"
 #include "curtis.h"
 #include "actuator.h"
+#include "comms.h"
 
 bool debugController = false;
 bool debugSetpoints = false;
@@ -14,7 +16,7 @@ bool debugServoInput = false;
 bool commandWaiting = false;
 
 String esp_address; //variable to save the esp bluetooth address useful for debugging.
-int motorSpeed;
+//int motorSpeed;
 
 // P3s controller output minimums and maximums.
 // Minimums are down and left on analog sticks
@@ -34,11 +36,18 @@ void onConnect() {
 void onDisconnect() {
   Serial.println("Controller Disconnected");
   error = true;
+  errorMessage = "4 Controller Connection Lost.";
+  motorSpeed = 0;
+
 }
 
 void getStates() {
   // Callback function to look at the last messages from the ps3 controller
 
+  if ( Ps3.event.button_down.start ) {
+    // Serial.println("Started pressing the triangle start");
+    enableServoInput = !enableServoInput;
+  }
   // If we press the 'triangle' button...
   if ( Ps3.event.button_down.triangle ) {
     // Serial.println("Started pressing the triangle button");
@@ -68,19 +77,25 @@ void getStates() {
   right_y = Ps3.data.analog.stick.ry; // up=-128 down=128
   right_trigger_2 = Ps3.data.analog.button.r2; // 0 -> 255
 
-  // forward/back control
-  // left_y up=128 down=-128
-  if (abs(left_y) > deadzone) {
-    motorSpeed = left_y;
-  } else {
-    motorSpeed = 0;
-  }
+  if (enableServoInput) {
+    if (!error) {
+      doRCInput();
+    }
+  } else { // get input from the bt joysticks
+    // forward/back control
+    // left_y up=128 down=-128
+    if (abs(left_y) > deadzone) {
+      motorSpeed = left_y;
+    } else {
+      motorSpeed = 0;
+    }
 
-  //right_y left=-128 right=128
-  if (abs(right_x) > deadzone) {
-    actuatorSetpoint_request = right_x;
-  } else {
-    actuatorSetpoint_request = 0;
+    //right_y left=-128 right=128
+    if (abs(right_x) > deadzone) {
+      actuatorSetpoint_request = right_x;
+    } else {
+      actuatorSetpoint_request = 0;
+    }
   }
 
   if (debugController) {
@@ -120,8 +135,8 @@ void setupPs3() {
   Ps3.attach(getStates);
   Ps3.attachOnConnect(onConnect);
   Ps3.attachOnDisconnect(onDisconnect);
-  Ps3.begin("FC:F5:C4:00:Fa:C6");  // MAC address of the esp32
-
+  //  Ps3.begin("FC:F5:C4:00:Fa:C6");  // MAC address of the esp32 //HWPROTOTYPE
+  Ps3.begin("bt:24:d7:eb:0e:df:06");  // DeskTesting
   if (!Ps3.isConnected()) {
     Serial.println("Controller not yet connected");
   } else {

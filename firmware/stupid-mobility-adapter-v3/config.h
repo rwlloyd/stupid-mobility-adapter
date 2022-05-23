@@ -13,7 +13,9 @@
 extern int motorSpeed;
 extern int actuatorSetpoint_request;
 
+
 #define errorPin 36
+#define BATT_DIV_PIN 35 // 15 can't be used while BT and Wifi are enabled... https://docs.espressif.com/projects/esp-idf/en/release-v4.0/api-reference/peripherals/adc.html
 
 // Select configuration below
 // #define NANO               // AVR microcontroller connecter to two BTS7960 motor drivers. Probably wont work right now. see https://github.com/rwlloyd/Scooterbot for more. 
@@ -59,7 +61,7 @@ extern int actuatorSetpoint_request;
 #define MOT_EN 32 // pins are now tied together
 #define MOT_L_PWM 25
 #define MOT_R_PWM 33
-#define MOT_IS 35
+//#define MOT_IS 35
 #define motorMin 50
 #define motorMax 255
 #define speedLimit 255
@@ -94,5 +96,8 @@ extern int actuatorSetpoint_request;
 #define MESSAGELENGTH 4
 #define BAUDRATE 115200
 #define COMCHECKTIME 250
+
+#define SERVO_IN_THROTTLE_PIN 16
+#define SERVO_IN_STEER_PIN 17
 
 #endif

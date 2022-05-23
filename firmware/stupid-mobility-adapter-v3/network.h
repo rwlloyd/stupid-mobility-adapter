@@ -2,6 +2,6 @@
 #define NETWORK_H
 
 void startNetwork();
-//void doNetworking();
+void doNetworking();
 
 #endif

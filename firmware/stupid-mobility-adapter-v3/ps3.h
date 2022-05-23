@@ -1,7 +1,6 @@
 #ifndef PS3_H
 #define PS3_H
 
-
 extern bool debugActuator;
 extern bool debugCurtis;
 extern bool debugActuator;
