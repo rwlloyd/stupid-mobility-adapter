@@ -90,8 +90,10 @@ extern int toolSetpoint_request;
 #define ACT_I 0.1
 #define ACT_D 0
 
-#define actCentre 889              // 263 on 0-1024 scale
-#define actDeadband 5              //Stops the actuator hunting quite so much
+#define actCentre 1850              // 500 on 0-1024 scale (sctbot 889)
+#define actMax 900
+#define actMin 2800 //1000
+#define actDeadband 10              //Stops the actuator hunting quite so much
 
 // Tool Actuator
 // For actuator, extend is....
@@ -108,7 +110,7 @@ extern int toolSetpoint_request;
 #define TOOL_D 0
 
 #define toolMin 10
-#define toolMax 40
+#define toolMax 1000
 #define toolCentre floor(abs(toolMax - toolMin)/2); //  0-1024 scale
 #define toolDeadband 5              //Stops the actuator hunting quite so much
 #define toolStep 10

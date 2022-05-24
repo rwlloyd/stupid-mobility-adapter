@@ -100,12 +100,12 @@ void doActuatorControl() {
   else {
     digitalWrite(ACT_EN, HIGH);
     digitalWrite(TOOL_EN, HIGH);
-    actSetpoint = map(actuatorSetpoint_request, -128, 128, Min, Max);
+    actSetpoint = map(actuatorSetpoint_request, -128, 128, actMin, actMax);
     toolSetpoint = constrain(toolSetpoint_request, toolMin, toolMax); //// Not really happy with this. needs better control
     // toolSetpoint = map(toolSetpoint_request, -128, 128, toolMin, toolMax);
     //Serial.println(Setpoint);
     actPosition = analogRead(ACT_FB);
-    actPosition = analogRead(TOOL_FB);
+    toolPosition = analogRead(TOOL_FB);
     actInput = actPositionAvg.reading(actPosition);
     toolInput = toolPositionAvg.reading(toolPosition);
     if (debugActuator) {
@@ -149,15 +149,15 @@ void doActuatorControl() {
       analogWrite(TOOL_L_PWM, 0);
     }
     else if (toolInput > toolSetpoint + toolDeadband) {
-      digitalWrite(ACT_EN, HIGH);
-      analogWrite(ACT_R_PWM, abs(toolOutput));
-      analogWrite(ACT_L_PWM, 0);
+      digitalWrite(TOOL_EN, HIGH);
+      analogWrite(TOOL_R_PWM, abs(toolOutput));
+      analogWrite(TOOL_L_PWM, 0);
     }
     else if (toolInput < toolSetpoint - toolDeadband) {
       // FOR this setup, left turn is extending the actuator to turn ...
-      digitalWrite(ACT_EN, HIGH);
-      analogWrite(ACT_L_PWM, abs(toolOutput));
-      analogWrite(ACT_R_PWM, 0);
+      digitalWrite(TOOL_EN, HIGH);
+      analogWrite(TOOL_L_PWM, abs(toolOutput));
+      analogWrite(TOOL_R_PWM, 0);
       // Serial.println(toolOutput);
 
     }

@@ -12,6 +12,8 @@ In addition to having a microcontroller to tell the motors, actuators etc. what 
 
 The addition of a companion computer adds a great deal of connectivity and processing power. Unfortunately, it also increases the complexity of the setup, and points of failure. Considering that basic control of the platform is a safety critical system, it is desirable to simplify the design. Additionally, as the prototypes of this project have performed on a variety of hardware, it is desirable to make this hardware intentionally generic, while keeping in mind its intended purpose.
 
+The next version of the controller changed the microcontroller used to the ESP32. This allows us to cut out the companion computer for basic remote control using a bluetooth controller. There is also the addition of wifi, OTA updates using suitable sized compiled firmware and a large number of interface options. Overall simplification along the thinking of 'the best part is no part'. The drawback of this system is a reduction in CPU processing power.  
+
 ---
 
 ### stupid mobility adapter v2 
