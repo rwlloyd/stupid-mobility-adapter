@@ -1,6 +1,6 @@
 
 #include "comms.h"
-//#include "network.h"
+#include "network.h"
 #include "ps3.h"
 #include "rcinput.h"
 #include "config.h"
@@ -16,7 +16,7 @@
 void setup() {
   startSafety();
   startComms();
-  //startNetwork();
+  startNetwork();
   setupPs3();
   setupActuator();
   //setupMobility();
@@ -27,18 +27,18 @@ void setup() {
 
 void loop() {
   doSafety();
-  //doNetworking(); 
+  doNetworking(); 
   checkPs3();
-  //checkConnection(); // comms.cpp - Only needed when relying on the serial connection for safety critical control
-  //checkSerialComs(); // comms.cpp - Needed if recieving serial data for control. So, not yet.
+  //checkConnection();      // comms.cpp - Only needed when relying on the serial connection for safety critical control
+  //checkSerialComs();      // comms.cpp - Needed if recieving serial data for control. So, not yet.
   if (error) {
     stopActuators();
     doCurtisControl();
-    //stopMotor(); // for use with pwm motor driver.
+    //stopMotor();          // for use with pwm motor driver.
   }
   else {
     doActuatorControl();
     doCurtisControl();
-    //doMobilityControl(); // for use with a pwm motor driver
+    //doMobilityControl();  // for use with a pwm motor driver
   }
 }
