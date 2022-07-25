@@ -76,7 +76,7 @@ void setupActuator() {
   toolPositionAvg.begin();
   // set the inital setpoint to the centre position
   actSetpoint = actCentre;
-  toolSetpoint = toolInput; // toolMax; bad idea to make the tool move by default at startup
+  toolSetpoint_request = 1750; // toolMax; bad idea to make the tool move by default at startup
   // Just to be on the safe side, make sur the actuator is disabled
   // stopActuator(); /// dont request a position then turn everything off....
   digitalWrite(ACT_EN, LOW);

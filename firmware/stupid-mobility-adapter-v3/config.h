@@ -48,9 +48,9 @@ extern int toolSetpoint_request;
 #define TOOL_D 0
 
 #define toolMin 10
-#define toolMax 1000
+#define toolMax 1750
 #define toolCentre floor(abs(toolMax - toolMin)/2); //  0-1024 scale
-#define toolDeadband 5              //Stops the actuator hunting quite so much
+#define toolDeadband 7              //Stops the actuator hunting quite so much
 #define toolStep 10
 
 // Communication 
