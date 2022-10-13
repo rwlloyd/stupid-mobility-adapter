@@ -21,7 +21,7 @@ void setup() {
   setupActuator();
   //setupMobility();
   setupCurtis(); 
-  startRCInput();
+  //startRCInput();
   Serial.println("[INFO] Setup Completed");
 }
 
@@ -30,7 +30,7 @@ void loop() {
   doNetworking(); 
   checkPs3();
   //checkConnection();      // comms.cpp - Only needed when relying on the serial connection for safety critical control
-  //checkSerialComs();      // comms.cpp - Needed if recieving serial data for control. So, not yet.
+  checkSerialComs();      // comms.cpp - Needed if recieving serial data for control. So, not yet.
   if (error) {
     stopActuators();
     doCurtisControl();

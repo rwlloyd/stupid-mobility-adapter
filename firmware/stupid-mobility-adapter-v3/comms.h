@@ -4,6 +4,7 @@
 void startComms();
 
 void checkSerialComs();
+void checkConnection();
 void serialEvent();
 void processSerialCommand();
 

@@ -9,7 +9,7 @@
 #include <analogWrite.h>
 #include <movingAvg.h>
 #include <PID_v1.h>
-//#include "comms.h"
+#include "comms.h"
 #include "safety.h"
 #include "config.h"
 #include "ps3.h"
