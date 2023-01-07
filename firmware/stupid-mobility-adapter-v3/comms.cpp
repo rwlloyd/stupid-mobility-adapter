@@ -69,7 +69,7 @@ void processSerialCommand() {
 }
 
 void checkSerialComs() {
-  if (commandReceived == true)   {                  // This code is executed in non interupt time only when a new command has been recieved
+  if (commandReceived == true && enableServoInput)   {                  // This code is executed in non interupt time only when a new command has been recieved
     // A new command has been recieved when a \n or \r character is recieved.
     processSerialCommand();                        // Process the command
   }

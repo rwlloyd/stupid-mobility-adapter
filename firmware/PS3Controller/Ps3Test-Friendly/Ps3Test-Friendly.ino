@@ -72,7 +72,9 @@ void setup()
  
     esp_address = String(Ps3.getAddress());
     // Ps3.begin("24:62:AB:FC:BB:4A"); animatronic head addr
-    Ps3.begin("FC:F5:C4:00:FA:C6");
+//    Ps3.begin("FC:F5:C4:00:FA:C6");
+    Ps3.begin("10:52:1c:76:30:42");
+
  
     Serial.println("Initialization finished.");
     Serial.println(esp_address);

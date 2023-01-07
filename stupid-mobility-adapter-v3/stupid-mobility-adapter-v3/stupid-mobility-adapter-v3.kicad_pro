@@ -394,7 +394,7 @@
       "idf": "",
       "netlist": "stupid-mobility-adapter-v3.net",
       "specctra_dsn": "",
-      "step": "",
+      "step": "stupid-mobility-adapter-v3.step",
       "vrml": ""
     },
     "page_layout_descr_file": ""

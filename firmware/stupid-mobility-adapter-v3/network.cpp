@@ -9,14 +9,13 @@
 #include "safety.h"
 //#include "OTA.h"
 
+// Replace with your network credentials
+extern const char* hostname = "ESP32 ARWACv4";
+extern const char* ssid = "ARWACv4";
+extern const char* password = NULL;
+
 const unsigned long updateInterval = 1000; //Basic update interval for webpage data
 unsigned long previousMillis = 0;
-
-// Replace with your network credentials
-//const char* ssid = "REPLACE_WITH_YOUR_SSID";
-//const char* password = "REPLACE_WITH_YOUR_PASSWORD";
-const char* ssid = "oort";
-const char* password = "heliopause";
 
 // Create AsyncWebServer object on port 80
 AsyncWebServer server(80);
@@ -53,6 +52,7 @@ const char index_html[] PROGMEM = R"rawliteral(
       document.getElementById('battv').innerHTML = obj.battv;
       document.getElementById('throttle').innerHTML = obj.throttle;
       document.getElementById('steer').innerHTML = obj.steer;
+      document.getElementById('tool').innerHTML = obj.tool;
       console.log(obj);
       console.log("[socket] " + event.data);
       //document.getElementById("my_value").innerHTML = obj.value;
@@ -80,6 +80,7 @@ const char index_html[] PROGMEM = R"rawliteral(
   <div> Battery Voltage: <span id='battv'>-</span> V</div>
   <div> Throttle: <span id='throttle'>-</span></div>
   <div> Steering: <span id='steer'>-</span></div>
+  <div> Tool: <span id='tool'>-</span></div>
 </body>
 </html>
 )rawliteral";
@@ -106,8 +107,11 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length
         Serial.print(F("deserializeJson() failed: "));
         Serial.println(error.f_str());
         return;
-        }
-        break;
+      }
+      break;
+      // else {
+
+      // }
   }
 }
 
@@ -116,14 +120,39 @@ void notFound(AsyncWebServerRequest *request) {
   request->send(404, "text/plain", "Not found");
 }
 
-void startNetwork(){
-  //setupOTA("TemplateSketch", ssid, password);
-    // Connect to Wi-Fi
-  WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(1000);
+void initWifi(){
+  // very useful https://randomnerdtutorials.com/esp32-useful-wi-fi-functions-arduino/
+  if (WIFI_TYPE == 1){
+    // For just connecting to a known hotspot
+    WiFi.mode(WIFI_STA);                      // instantiate wifi in station mode
+    WiFi.begin(ssid, password);               // make sure this is set in the config when you set the WIFI_TYPE
     Serial.println("Connecting to WiFi..");
+    while (WiFi.status() != WL_CONNECTED) {
+      delay(1000);
+      Serial.print(".");                      // Wait for wifi connection not sure how it would timeout...
+    }
+  } else if (WIFI_TYPE == 2) {
+    // For rocking your own hotspot because rural
+    int channel = 6;        // Wi-Fi channel number (1-13)
+    int ssid_hidden = 0;    // (0 = broadcast SSID, 1 = hide SSID)
+    int max_connection = 4; //maximum simultaneous connected clients (1-4)
+   
+    WiFi.mode(WIFI_AP);
+    WiFi.softAP(ssid, password, channel, ssid_hidden, max_connection);
+  } else if (WIFI_TYPE == 3){
+    WiFi.mode(WIFI_AP_STA); 
+  } else { // Just turn wifi off
+    Serial.println("Continuing without configuring wifi");
   }
+}
+
+void startNetwork(){
+
+  // Setup OTA updates
+  //setupOTA("TemplateSketch", ssid, password); // Not currently used due to sketch size restrictions
+
+  // setup Wi-Fi via function call ^
+  initWifi();
 
   // Print ESP Local IP Address
   Serial.println(WiFi.localIP());
@@ -132,11 +161,17 @@ void startNetwork(){
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){ 
     request->send_P(200, "text/html", index_html);
   });
+
   // Route for 404 error
   server.onNotFound(notFound);
 
+  // begin the http server
   server.begin();
+
+  // begin the websocket server
   webSocket.begin();
+
+  // setup the callback for webSocket events 
   webSocket.onEvent(webSocketEvent);
 }
 
@@ -156,6 +191,7 @@ void doNetworking(){
     object["throttle"] = motorSpeed;
     object["steer"] = actuatorSetpoint_request;
     object["battv"] = batteryVoltage;
+    object["tool"] = toolSetpoint_request;
     serializeJson(doc_tx, jsonString);
     webSocket.broadcastTXT(jsonString);
     Serial.println(jsonString);

@@ -3,7 +3,7 @@
 #include "safety.h"
 #include "config.h"
 //#include "dc_motor.h"
-#include "rcinput.h"
+//#include "rcinput.h"
 #include "curtis.h"
 #include "actuator.h"
 #include "comms.h"
@@ -79,7 +79,8 @@ void getStates() {
 
   if (enableServoInput) {
     if (!error) {
-      doRCInput();
+      //doRCInput();
+      processSerialCommand();
     }
   } else { // get input from the bt joysticks
     // forward/back control
@@ -96,6 +97,14 @@ void getStates() {
     } else {
       actuatorSetpoint_request = 0;
     }
+
+    if (abs(left_trigger_2) > 200){
+      toolSetpoint_request = toolMin;
+    }
+    if (abs(right_trigger_2) > 200){
+      toolSetpoint_request = toolMax;
+    }
+
   }
 
   if (debugController) {
@@ -136,7 +145,8 @@ void setupPs3() {
   Ps3.attachOnConnect(onConnect);
   Ps3.attachOnDisconnect(onDisconnect);
   //  Ps3.begin("FC:F5:C4:00:Fa:C6");  // MAC address of the esp32 //HWPROTOTYPE
-  Ps3.begin("bt:24:d7:eb:0e:df:06");  // DeskTesting
+  //Ps3.begin("bt:24:d7:eb:0e:df:06");  // DeskTesting
+  Ps3.begin("94:b5:55:2b:b4:1a");  // NEwESP
   if (!Ps3.isConnected()) {
     Serial.println("Controller not yet connected");
   } else {

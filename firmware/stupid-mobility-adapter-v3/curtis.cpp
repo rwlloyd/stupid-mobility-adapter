@@ -48,9 +48,9 @@ void doCurtisControl()
   // Set the Direction
   if (motorSpeed >= 0) 
   {
-    digitalWrite(dirPin, LOW);
-  } else if (motorSpeed < 0) {
     digitalWrite(dirPin, HIGH);
+  } else if (motorSpeed < 0) {
+    digitalWrite(dirPin, LOW);
   }
   // Set the motor voltage demand with the DAC. motorspeed comes from the controller
   MCP.setValue(demand);

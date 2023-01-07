@@ -4,6 +4,6 @@
 
 void setupActuator();
 void doActuatorControl();
-void stopActuator();
+void stopActuators();
 
 #endif
