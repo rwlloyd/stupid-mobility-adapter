@@ -53,6 +53,26 @@ and that's just the hardware. Because we're using an esp32, we have the option f
 - A web interface/feedback
 - ROS support (using micro-ROS)
 
+## v3 PCB Problems
+
+- The GND next to the VIN pin on the ESP32 Socket must be isolated
+    - REASON: I misread the name when Making the footprint. It's actually CMD ( Something to do with the SPI Falsh chip. If you don't disconnect it, the ESP32 Can't Boot)
+- LED 'D1' has the polarity reversed on the silkscreen.
+- FB_0 has 5V and GND silkscreen swapped.
+- 5V label on FB_0 and FB_1 should be 3V3
+- The Board needs reverse polarity protection. Don't ask me how I know.
+- A power LED on the 24V input would be useful.
+- Should have broken out some power next to communicaton connections (Like I did with the relays)
+- The Buzzer footprint needs to be correct. And connected to a pin capable of output :( 
+- The Battery divider cannot be used while Wifi is enabled. Only discovered after install :(
+    - Note: ADC2 pins cannot be used when Wi-Fi is used. So, if you’re using Wi-Fi and you’re having trouble getting the value from an ADC2 GPIO, you may consider using an ADC1 GPIO instead, that should solve your problem. from https://randomnerdtutorials.com/esp32-adc-analog-read-arduino-ide/
+
+### Should have dones;
+- A way to adjust the actuator endpoints on the board?
+- A way to adjust the potential divider for the raw battery monitor. They're already talking about 48V!
+
+However, we're running out of pins and It's probably time to embrace CAN bus, make the esp32 the 'master' node, then have nodes for the motor driver(s) ;), Actuators and any other custom bits. We should also start to be able to begin to use automotive devices....  
+
 ## Version 3.1 ideas
 
 before I've even really finished the v3 hardware design, I've found things that I think it would be remiss of me to plan for. With 20/20 hindsight, some of these should have been included from the beginning.

@@ -2,7 +2,7 @@
 #include "comms.h"
 #include "network.h"
 #include "ps3.h"
-#include "rcinput.h"
+//#include "rcinput.h"
 #include "config.h"
 //#include "dc_motor.h"
 #include "curtis.h"

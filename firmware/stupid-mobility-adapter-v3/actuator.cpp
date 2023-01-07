@@ -6,7 +6,7 @@
 */
 
 #include <Arduino.h>
-#include <analogWrite.h>
+//#include <analogWrite.h>
 #include <movingAvg.h>
 #include <PID_v1.h>
 #include "comms.h"
@@ -133,13 +133,13 @@ void doActuatorControl() {
     }
     else if (actInput > actSetpoint + actDeadband) {
       digitalWrite(ACT_EN, HIGH);
-      analogWrite(ACT_R_PWM, abs(actOutput));
+      analogWrite(ACT_R_PWM, int(abs(actOutput)));
       analogWrite(ACT_L_PWM, 0);
     }
     else if (actInput < actSetpoint - actDeadband) {
       // FOR this setup, left turn is extending the actuator to turn ...
       digitalWrite(ACT_EN, HIGH);
-      analogWrite(ACT_L_PWM, abs(actOutput));
+      analogWrite(ACT_L_PWM, int(abs(actOutput)));
       analogWrite(ACT_R_PWM, 0);
     }
 
@@ -150,13 +150,13 @@ void doActuatorControl() {
     }
     else if (toolInput > toolSetpoint + toolDeadband) {
       digitalWrite(TOOL_EN, HIGH);
-      analogWrite(TOOL_R_PWM, abs(toolOutput));
+      analogWrite(TOOL_R_PWM, int(abs(toolOutput)));
       analogWrite(TOOL_L_PWM, 0);
     }
     else if (toolInput < toolSetpoint - toolDeadband) {
       // FOR this setup, left turn is extending the actuator to turn ...
       digitalWrite(TOOL_EN, HIGH);
-      analogWrite(TOOL_L_PWM, abs(toolOutput));
+      analogWrite(TOOL_L_PWM, int(abs(toolOutput)));
       analogWrite(TOOL_R_PWM, 0);
       // Serial.println(toolOutput);
 

@@ -3,7 +3,7 @@
 #include "safety.h"
 #include "config.h"
 //#include "dc_motor.h"
-#include "rcinput.h"
+//#include "rcinput.h"
 #include "curtis.h"
 #include "actuator.h"
 #include "comms.h"

@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include <BTS7960.h>
-#include <analogWrite.h>
+//#include <analogWrite.h>
 #include <movingAvg.h>                  // https://github.com/JChristensen/movingAvg
 #include "safety.h"
 #include "config.h"
